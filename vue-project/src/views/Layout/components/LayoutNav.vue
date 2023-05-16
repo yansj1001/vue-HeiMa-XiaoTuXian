@@ -5,6 +5,7 @@
     <nav class="app-topnav">
         <div class="container">
             <ul>
+                <!-- 此处对登录状态进行判断，为true则限制以下内容 -->
                 <template v-if="true">
                     <li><a href="javascript:;"><i class="iconfont icon-user"></i>周杰伦</a></li>
                     <li><el-popconfirm title="你确定要退出登录吗?" confirm-button-text="确认" cancel-button-text="取消">
@@ -15,6 +16,7 @@
                     <li><a href="javascript:;">我的订单</a></li>
                     <li><a href="javascript:;">会员中心</a></li>
                 </template>
+                <!-- 若没有登录则显示以下内容 -->
                 <template v-else>
                     <li><a href="javascript:;">请先登录</a></li>
                     <li><a href="javascript:;">帮助中心</a></li>

@@ -1,5 +1,19 @@
 <script setup>
-
+//引入获取列表数据的方法
+import { getCategoryAPI } from '@/apis/layout';
+import { onMounted , ref} from 'vue';
+//定义一个空的响应式数组数据用于存放列表数据
+const categoryList = ref([])
+//调用获取列表数据的方法，使用函数包装再后续进行数据处理时更加方便
+//因为获取列表数据的方法的返回值是一个promise，所以使用async修饰
+const getList = async () => {
+    const res = await getCategoryAPI()
+    categoryList.value = res.result
+}
+//在组件挂载后就调用获取列表数据方法
+onMounted(()=>{
+    getList()
+})
 </script>
 
 <template>
@@ -8,13 +22,13 @@
            <h1 class="logo">
             <RouterLink to="/">小兔鲜</RouterLink>
            </h1>
+           <!-- 列表渲染 -->
             <ul class="app-header-nav">
-                <li><RouterLink to="/">首页</RouterLink></li>
-                <li><RouterLink to="/">居家</RouterLink></li>
-                <li><RouterLink to="/">美食</RouterLink></li>
-                <li><RouterLink to="/">服饰</RouterLink></li>
+                <!-- 使用v-for遍历渲染 -->
+                <li v-for="item of categoryList" :key="item.id"><RouterLink to="/">{{ item.name }}</RouterLink></li>
             </ul>
             <div class="search">
+                <!-- i标签用来防止文本图标 -->
                 <i class="iconfont icon-search"></i>
                 <input type="text" placeholder="搜一搜">
             </div>
@@ -22,6 +36,7 @@
         </div>
     </header>
 </template>
+使用scss标准编写样式
 <style scoped lang="scss">
 .app-header{
     background-color: #fff;
