@@ -1,6 +1,11 @@
 <script setup>
 //使用useVue插件辅助获取滚动距离，方法为useScroll()
 import { useScroll } from '@vueuse/core'
+import { useCategoryStore } from '@/stores/category';
+
+//由于获取数据的方法在根组件中调用了，所以此处获取实例对象后可直接使用数据
+const categoryStore = useCategoryStore()
+
 //该方法会返回多个值，此处使用解构，仅获取y的值，useScroll方法的参数中需要传递一个值，该值应该为后去距离的参考对象（个人理解，不一定准确，有待确认）
 const {y} = useScroll(window)
 </script>
@@ -14,32 +19,8 @@ const {y} = useScroll(window)
                 <li class="home">
                     <RouterLink to="/">首页</RouterLink>
                 </li>
-                <li>
-                    <RouterLink to="/">居家</RouterLink>
-                </li>
-                <li>
-                    <RouterLink to="/">美食</RouterLink>
-                </li>
-                <li>
-                    <RouterLink to="/">服饰</RouterLink>
-                </li>
-                <li>
-                    <RouterLink to="/">母婴</RouterLink>
-                </li>
-                <li>
-                    <RouterLink to="/">个护</RouterLink>
-                </li>
-                <li>
-                    <RouterLink to="/">严选</RouterLink>
-                </li>
-                <li>
-                    <RouterLink to="/">数码</RouterLink>
-                </li>
-                <li>
-                    <RouterLink to="/">运动</RouterLink>
-                </li>
-                <li>
-                    <RouterLink to="/">杂项</RouterLink>
+                <li v-for="item of categoryStore.categoryList" :key="item.id">
+                    <RouterLink to="/">{{ item.name }}</RouterLink>
                 </li>
             </ul>
             <div class="right">

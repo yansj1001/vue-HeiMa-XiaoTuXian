@@ -1,4 +1,14 @@
+<script setup>
+import HomeCategory from './components/HomeCategory.vue';
+import HomeBanner from './components/HomeBanner.vue';
+import HomeNew from './components/HomeNew.vue';
+import HomeHot from './components/HomeHot.vue';
+</script>
 <template>
-<div>我是home页</div>
-<div style="height:1200px">scroll</div>
+    <div class="container">
+        <HomeCategory></HomeCategory>
+        <HomeBanner></HomeBanner>
+    </div>
+    <HomeNew></HomeNew>
+    <HomeHot></HomeHot>
 </template>

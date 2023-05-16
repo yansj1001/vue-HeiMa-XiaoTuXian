@@ -1,19 +1,24 @@
 <script setup>
-//引入获取列表数据的方法
-import { getCategoryAPI } from '@/apis/layout';
-import { onMounted , ref} from 'vue';
-//定义一个空的响应式数组数据用于存放列表数据
-const categoryList = ref([])
-//调用获取列表数据的方法，使用函数包装再后续进行数据处理时更加方便
-//因为获取列表数据的方法的返回值是一个promise，所以使用async修饰
-const getList = async () => {
-    const res = await getCategoryAPI()
-    categoryList.value = res.result
-}
-//在组件挂载后就调用获取列表数据方法
-onMounted(()=>{
-    getList()
-})
+//此处会出现重复请求，待优化
+// //引入获取列表数据的方法
+// import { getCategoryAPI } from '@/apis/layout';
+// import { onMounted , ref} from 'vue';
+// //定义一个空的响应式数组数据用于存放列表数据
+// const categoryList = ref([])
+// //调用获取列表数据的方法，使用函数包装再后续进行数据处理时更加方便
+// //因为获取列表数据的方法的返回值是一个promise，所以使用async修饰
+// const getList = async () => {
+//     const res = await getCategoryAPI()
+//     categoryList.value = res.result
+// }
+// //在组件挂载后就调用获取列表数据方法
+// onMounted(()=>{
+//     getList()
+// })
+//此处优化重复请求，使用pinia管理数据，调用方法使用根组件调用，子组件使用其中的数据，请求只会发生一次
+import { useCategoryStore } from '@/stores/category';
+//由于获取数据的方法在根组件中调用了，所以此处获取实例对象后可直接使用数据
+const categoryStore = useCategoryStore()
 </script>
 
 <template>
@@ -25,7 +30,7 @@ onMounted(()=>{
            <!-- 列表渲染 -->
             <ul class="app-header-nav">
                 <!-- 使用v-for遍历渲染 -->
-                <li v-for="item of categoryList" :key="item.id"><RouterLink to="/">{{ item.name }}</RouterLink></li>
+                <li v-for="item of categoryStore.categoryList" :key="item.id"><RouterLink to="/">{{ item.name }}</RouterLink></li>
             </ul>
             <div class="search">
                 <!-- i标签用来防止文本图标 -->
