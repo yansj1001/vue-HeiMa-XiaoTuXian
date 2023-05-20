@@ -2,6 +2,7 @@
 import HomePanel from './HomePanel.vue';
 import { getNewAPI } from '@/apis/home';
 import {onMounted,ref} from 'vue'
+//常规调用接口获取数据
 const newList = ref([])
 const getNewList = async () => {
     const res = await getNewAPI()

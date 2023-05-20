@@ -17,6 +17,7 @@ const props = defineProps({
                 <h3>{{ tittle }}<small>{{ subTittle }}</small></h3>
             </div>
             <!-- 使用插槽传入主体 -->
+            <!-- 当只有一个插槽时，可不使用name属性指定插入 -->
             <slot name="main"></slot>
         </div>
     </div>

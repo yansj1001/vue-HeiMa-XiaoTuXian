@@ -17,6 +17,9 @@ onMounted(()=>{
     <LayoutNav></LayoutNav>
     <LayoutHeader></LayoutHeader>
     <!-- 二级路由出口 -->
+    <!-- 给路由出口添加一个key值，用来破坏组件复用机制 -->
+    <!-- 使用这种方法会出现重复发送请求 -->
+    <!-- <RouterView :key="$route.fullPath" /> -->
     <RouterView />
     <LayoutFooter></LayoutFooter>
 </template>

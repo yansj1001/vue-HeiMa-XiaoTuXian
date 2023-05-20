@@ -19,6 +19,7 @@
 import { useCategoryStore } from '@/stores/category';
 //由于获取数据的方法在根组件中调用了，所以此处获取实例对象后可直接使用数据
 const categoryStore = useCategoryStore()
+console.log(categoryStore.categoryList);
 </script>
 
 <template>
@@ -30,7 +31,8 @@ const categoryStore = useCategoryStore()
            <!-- 列表渲染 -->
             <ul class="app-header-nav">
                 <!-- 使用v-for遍历渲染 -->
-                <li v-for="item of categoryStore.categoryList" :key="item.id"><RouterLink to="/">{{ item.name }}</RouterLink></li>
+                <li class="home"><RouterLink to="/">首页</RouterLink></li>
+                <li v-for="item of categoryStore.categoryList" :key="item.id"><RouterLink active-class="active" :to="`/category/${item.id}`">{{ item.name }}</RouterLink></li>
             </ul>
             <div class="search">
                 <!-- i标签用来防止文本图标 -->

@@ -2,6 +2,7 @@
 import HomePanel from './HomePanel.vue';
 import { getHotAPI } from '@/apis/home';
 import {onMounted,ref} from 'vue'
+//调用接口获取数据
 const hotList = ref([])
 const getHotList = async () => {
     const res = await getHotAPI()
