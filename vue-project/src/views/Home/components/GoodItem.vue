@@ -2,7 +2,7 @@
 const props = defineProps(['goods'])
 </script>
 <template>
-    <RouterLink to="/" class="goods-item">
+    <RouterLink :to="`/detail/${props.goods.id}`" class="goods-item">
         <img v-img-lazy="props.goods.picture" alt="" />
         <p class="name ellipsis">{{ props.goods.name }}</p>
         <p class="desc ellipsis">{{ props.goods.desc }}</p>
