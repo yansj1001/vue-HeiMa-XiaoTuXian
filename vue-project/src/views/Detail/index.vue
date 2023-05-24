@@ -8,9 +8,11 @@ const route = useRoute()
 const getGoods = async ()=>{
   const res = await getDetailsAPI(route.params.id)
   goodsDetail.value = res.result
-  console.log( goodsDetail.value);
 }
 onMounted(()=>{getGoods()})
+const skuChange = (sku)=>{
+  console.log(sku);
+}
 </script>
 
 <template>
@@ -32,7 +34,7 @@ onMounted(()=>{getGoods()})
           <div class="goods-info">
             <div class="media">
               <!-- 图片预览区 -->
-
+              <ImageView :image-list="goodsDetail.mainPictures"/>
               <!-- 统计数量 -->
               <ul class="goods-sales">
                 <li>
@@ -81,7 +83,7 @@ onMounted(()=>{getGoods()})
                 </dl>
               </div>
               <!-- sku组件 -->
-
+              <XtxSku :goods="goodsDetail" @change="skuChange"/>
               <!-- 数据组件 -->
 
               <!-- 按钮组件 -->
