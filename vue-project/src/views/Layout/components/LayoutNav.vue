@@ -1,14 +1,26 @@
 <script setup>
-
+import {useUserStore} from '@/stores/user'
+import {useRouter} from 'vue-router'
+//获取router实例，用于跳转路由
+const router = useRouter()
+const userStore = useUserStore()
+//退出登录的逻辑，该事件为组件自带事件，当点击确定时，会自动触发该事件
+const confirm = () => {
+    //首先清除用户信息，由于用户信息使用插件与localstorage关联了，所以此处仅修改pinia中的数据即可
+    userStore.clearUserInfo()
+    //跳转至登录页
+    router.replace({path:'/login'})
+}
 </script>
 <template>
     <nav class="app-topnav">
         <div class="container">
             <ul>
                 <!-- 此处对登录状态进行判断，为true则限制以下内容 -->
-                <template v-if="false">
-                    <li><a href="javascript:;"><i class="iconfont icon-user"></i>周杰伦</a></li>
-                    <li><el-popconfirm title="你确定要退出登录吗?" confirm-button-text="确认" cancel-button-text="取消">
+                <template v-if="userStore.userInfo.token">
+                    <li><a href="javascript:;"><i class="iconfont icon-user"></i>{{ userStore.userInfo.account }}</a></li>
+                    <!-- 此处使用element-plus的确认框组件，内含事件confirm，当点击确认时，会触发该事件 -->
+                    <li><el-popconfirm @confirm="confirm" title="你确定要退出登录吗?" confirm-button-text="确认" cancel-button-text="取消">
                             <template #reference>
                                 <a href="javascript:;">退出登录</a>
                             </template>

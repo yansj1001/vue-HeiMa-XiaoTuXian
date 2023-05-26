@@ -9,6 +9,8 @@ import router from './router'
 import { lazyPlugin } from './directives'
 //引入图片放大镜以及SKU组件
 import { componentPlugin } from './components'
+//pinia数据持久化插件
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 //测试接口函数
 // import { getCategory } from './apis/testAPI'
 // getCategory().then(res=>{
@@ -16,8 +18,10 @@ import { componentPlugin } from './components'
 // })
 
 const app = createApp(App)
-
-app.use(createPinia())
+const pinia = createPinia()
+//注册pinia持久化插件
+pinia.use(piniaPluginPersistedstate)
+app.use(pinia)
 app.use(router)
 app.use(lazyPlugin)
 app.use(componentPlugin)
