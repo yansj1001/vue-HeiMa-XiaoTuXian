@@ -33,8 +33,9 @@ httpInstance.interceptors.request.use(config => {
     //配置响应码为401时token失效的相关操作
     //获取pinia的实例，用来使用其中的方法
     const userStore = useUserStore()
+    const isLogin = computed(()=>userStore.userInfo.token)
     //判断状态码是否为401
-    if(e.response.status === 401){
+    if(e.response.status === 401 && isLogin){
       //状态码为401时，代表token失效，此时需要将用户数据清除并跳转至登录页
       //清除用户数据
       userStore.clearUserInfo()

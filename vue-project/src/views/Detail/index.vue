@@ -3,16 +3,61 @@ import { getDetailsAPI } from '@/apis/detail';
 import {ref,onMounted} from 'vue'
 import { useRoute } from 'vue-router';
 import HotDetail from './components/HotDetail.vue';
+import { ElMessage } from 'element-plus';
+import {useCartStore} from '@/stores/cart'
+//定义商品详细的响应式对象
 const goodsDetail = ref({})
+//定义路由实例
 const route = useRoute()
+//获取商品的方法
 const getGoods = async ()=>{
   const res = await getDetailsAPI(route.params.id)
   goodsDetail.value = res.result
 }
 onMounted(()=>{getGoods()})
+
+
+const skuObj = ref({})
+//sku组件的函数
 const skuChange = (sku)=>{
-  console.log(sku);
+  //当商品属性为完全选择时，会返回一个空对象，只有属性选择全了才会将信息返回
+  //使用一个响应式对象来保存sku返回的值
+  skuObj.value = sku
+
 }
+
+//定义商品数量count的响应式变量
+const count = ref(1)
+//表单发生变化时触发的方法
+const countChange = () => {
+  console.log(count.value);
+}
+
+//获取cartStore实例
+const cartStore = useCartStore()
+const addCart = ()=> {
+  //根据该对象中是否有skuId这个属性来判断商品属性是否完全选择
+
+  if(skuObj.value.skuId){
+    //属性完全选择后需要执行cartStore中的action方法
+    cartStore.addCart({
+      id:goodsDetail.value.id, //商品id 
+      name:goodsDetail.value.name,  //商品名称
+      picture:goodsDetail.value.mainPictures[0], //商品图片，此处取第一张
+      price:goodsDetail.value.price,  //最新价格
+      count:count.value,   //商品数量
+      skuId:skuObj.value.skuId,  //skuId
+      attrsText:skuObj.specsText,  //商品规格文本
+      selected:true  //商品是否选中
+    })
+
+  } else {
+    //如果没有完全选择，会提示用户
+    ElMessage.warning('请选择商品规格')
+  }
+
+}
+
 </script>
 
 <template>
@@ -85,10 +130,10 @@ const skuChange = (sku)=>{
               <!-- sku组件 -->
               <XtxSku :goods="goodsDetail" @change="skuChange"/>
               <!-- 数据组件 -->
-
+              <el-input-number v-model="count" @change="countChange" />
               <!-- 按钮组件 -->
               <div>
-                <el-button size="large" class="btn">
+                <el-button size="large" class="btn" @click="addCart">
                   加入购物车
                 </el-button>
               </div>

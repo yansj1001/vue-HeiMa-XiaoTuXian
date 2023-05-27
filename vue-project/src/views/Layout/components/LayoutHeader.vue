@@ -17,6 +17,7 @@
 // })
 //此处优化重复请求，使用pinia管理数据，调用方法使用根组件调用，子组件使用其中的数据，请求只会发生一次
 import { useCategoryStore } from '@/stores/category';
+import HeaderCart from './HeaderCart.vue';
 //由于获取数据的方法在根组件中调用了，所以此处获取实例对象后可直接使用数据
 const categoryStore = useCategoryStore()
 console.log(categoryStore.categoryList);
@@ -40,6 +41,7 @@ console.log(categoryStore.categoryList);
                 <input type="text" placeholder="搜一搜">
             </div>
             <!-- 头部购物车 -->
+            <HeaderCart />
         </div>
     </header>
 </template>
