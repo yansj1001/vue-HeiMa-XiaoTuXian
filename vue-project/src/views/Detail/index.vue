@@ -13,6 +13,7 @@ const route = useRoute()
 const getGoods = async ()=>{
   const res = await getDetailsAPI(route.params.id)
   goodsDetail.value = res.result
+  console.log(goodsDetail.value);
 }
 onMounted(()=>{getGoods()})
 
